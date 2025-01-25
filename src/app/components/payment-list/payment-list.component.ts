@@ -53,6 +53,30 @@ export class PaymentListComponent {
       });
   }
 
+  deletePayment(id: string) {
+    this.isLoading = true; // Set isLoading to true to show loading indicator
+
+    // Call the deletePaymentById method of your paymentService
+    this.paymentService.deletePaymentById(id).subscribe({
+      next: (response) => {
+        // Filter out the deleted payment from payments and filteredPayments arrays
+        this.payments = this.payments.filter((payment) => payment._id !== id);
+        this.filteredPayments = this.filteredPayments.filter(
+          (payment) => payment._id !== id
+        );
+
+        // Optionally, you can recalculate the totalPages or other values
+        this.totalPages = response.pagination.total_pages;
+
+        this.isLoading = false; // Set isLoading to false after successful API call
+      },
+      error: (error) => {
+        console.error('Error deleting payment:', error);
+        this.isLoading = false; // Set isLoading to false in case of error
+      },
+    });
+  }
+
   // calculateTotalDue(): void {
   //   this.totalDue = this.payments.reduce(
   //     (acc, payment) => acc + payment.due_amount,

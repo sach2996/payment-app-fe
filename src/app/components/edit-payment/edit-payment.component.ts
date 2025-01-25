@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentService } from '../../core/services/payment.service';
 import { Payment } from '../../core/models/payment.model';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
@@ -17,6 +17,7 @@ import { LocalTimePipe } from '../../core/pipes/localtime.pipe';
     ReactiveFormsModule,
     NgIf,
     LocalTimePipe,
+    DecimalPipe,
   ],
   templateUrl: './edit-payment.component.html',
   styleUrls: ['./edit-payment.component.css'],
@@ -42,9 +43,8 @@ export class EditPaymentComponent implements OnInit {
     if (id) {
       this.paymentService.getPaymentById(id).subscribe({
         next: (response) => {
-          console.log('API Response:', response); // Debugging log
           this.payment = response.payment; // Extract payment object
-
+          // this.formattedTotalDue();
           if (this.payment) {
             this.createForm(this.payment);
             const utcDate = this.paymentForm.get('payee_added_date_utc')?.value;
@@ -69,6 +69,11 @@ export class EditPaymentComponent implements OnInit {
       this.errorMessage = 'Invalid payment ID';
       this.isLoading = false;
     }
+  }
+
+  formattedTotalDue() {
+    const totalDue = this.paymentForm.get('total_due')?.value;
+    this.paymentForm.patchValue({ total_due: totalDue.toFixed(2) });
   }
 
   createForm(payment: Payment) {
