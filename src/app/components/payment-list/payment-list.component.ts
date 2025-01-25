@@ -32,6 +32,11 @@ export class PaymentListComponent {
     this.currentPage = 1;
     this.getPayments(this.currentPage, this.pageSize);
   }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.getPayments(this.currentPage, this.pageSize);
+  }
   getPayments(currentPage: number, pageNumber: number): void {
     this.isLoading = true; // Set isLoading to true before API call
 
