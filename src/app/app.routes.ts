@@ -17,6 +17,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'payments/view/:id',
+    loadComponent: () =>
+      import('./components/view-payment/view-payment.component').then(
+        (m) => m.ViewPaymentComponent
+      ),
+  },
+  {
     path: 'payments/edit/:id',
     loadComponent: () =>
       import('./components/edit-payment/edit-payment.component').then(

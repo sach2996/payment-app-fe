@@ -1,19 +1,24 @@
 .container {
-    max-width: 600px;
+    /* max-width: 600px;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 5px; */
+    margin-top: 1%;
     background-color: #f9f9f9;
 }
 
 .header {
     text-align: center;
     margin-bottom: 20px;
+
 }
 
 .form-group {
     margin-bottom: 15px;
+
+    padding-left: 2%;
+    padding-right: 2%
 }
 
 .form-group label {
@@ -22,9 +27,16 @@
     /* font-weight: bold; */
 }
 
-.form-group input,
-.form-group select {
+.form-group input {
     width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.form-group select {
+    width: 102.5%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;

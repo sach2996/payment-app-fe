@@ -1,7 +1,11 @@
 .navbar {
     /* position: fixed; */
-    top: 0;
-    left: 0;
+
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    /* top: 0;
+    left: 0; */
     width: 100%;
     background-color: #f0f0f0;
     /* Light gray background */
@@ -12,7 +16,10 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 10px;
+    /* padding: 10px; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 .navbar-brand {
