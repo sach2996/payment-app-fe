@@ -1,0 +1,146 @@
+<div class="container">
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Loading...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>Error loading payment: {{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="payment" [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <div class="payment-details">
+      <h2 class="card-title">Payment Details</h2>
+
+      <div class="card-header">
+        <div class="card-id">#{{ payment._id }}</div>
+        <div class="card-actions">
+          <button
+            class="edit-button"
+            (click)="editPayment(payment._id)"
+            *ngIf="!editing"
+          >
+            Edit
+          </button>
+          <button class="edit-button" (click)="cancelEditing()" *ngIf="editing">
+            Cancel
+          </button>
+          <button class="delete-button" (click)="deletePayment(payment._id)">
+            Delete
+          </button>
+          <button
+            class="download-button"
+            *ngIf="payment.evidence_file_id"
+            (click)="downloadEvidence(payment.evidence_file_id, payment._id)"
+          >
+            Download Evidence
+          </button>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <div class="card-section">
+          <div class="label-value">
+            <label for="firstName">Payee Name:</label>
+            <span
+              >{{ payment.payee_first_name }}
+              {{ payment.payee_last_name }}</span
+            >
+          </div>
+          <div class="label-value">
+            <label for="payeeAddedDateUtc">Payee Added Date:</label>
+            <span>{{ payment.payee_added_date_utc | date }}</span>
+          </div>
+          <div class="label-value">
+            <label for="dueDate">Due Date:</label>
+            <span *ngIf="!editing">{{ payment.payee_due_date | date }}</span>
+            <input
+              type="date"
+              *ngIf="editing"
+              formControlName="payee_due_date"
+              (change)="onDueDateChange($event)"
+            />
+          </div>
+          <div class="label-value">
+            <label for="dueDate">Payment Status:</label>
+            <span *ngIf="!editing">{{
+              payment.payee_payment_status | uppercase
+            }}</span>
+            <select
+              style="width: 32%"
+              id="payee_payment_status"
+              formControlName="payee_payment_status"
+              *ngIf="editing"
+            >
+              <option
+                *ngFor="let status of objectKeys(paymentStatuses)"
+                [value]="status"
+              >
+                {{ paymentStatuses[status] }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card-section">
+          <div class="label-value">
+            <label for="dueAmount">Due Amount:</label>
+            <span *ngIf="!editing">{{ payment.due_amount | currency }}</span>
+            <input
+              type="number"
+              *ngIf="editing"
+              formControlName="due_amount"
+              (change)="onDueAmountChange($event)"
+            />
+          </div>
+          <div class="label-value">
+            <label for="totalDue">Total Due:</label>
+            <span>{{ payment.total_due | currency }}</span>
+          </div>
+
+          <div class="label-value">
+            <label for="currency">Currency:</label>
+            <span>{{ payment.currency }}</span>
+          </div>
+          <div class="label-value">
+            <label for="discount">Discount Percent:</label>
+            <span>{{ payment.discount_percent }}%</span>
+          </div>
+          <div class="label-value">
+            <label for="tax">Tax Percent:</label>
+            <span>{{ payment.tax_percent }}%</span>
+          </div>
+        </div>
+
+        <div class="card-section">
+          <div class="label-value">
+            <label for="address1">Address:</label>
+            <span
+              >{{ payment.payee_address_line_1 }},
+              {{ payment.payee_address_line_2 }}</span
+            >
+          </div>
+          <div class="label-value">
+            <span
+              >{{ payment.payee_city }}, {{ payment.payee_province_or_state }},
+              {{ payment.payee_country }}</span
+            >
+          </div>
+          <div class="label-value">
+            <span>{{ payment.payee_postal_code }}</span>
+          </div>
+        </div>
+
+        <div class="card-section">
+          <div class="label-value">
+            <label for="phone">Phone:</label>
+            <span>{{ payment.payee_phone_number }}</span>
+          </div>
+          <div class="label-value">
+            <label for="email">Email:</label>
+            <span>{{ payment.payee_email }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

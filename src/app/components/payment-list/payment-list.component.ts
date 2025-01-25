@@ -85,7 +85,7 @@ export class PaymentListComponent {
   // }
 
   viewPayment(id: any): void {
-    this.router.navigate([`/payments/edit/${id}`]);
+    this.router.navigate([`/payments/view/${id}`]);
   }
   // ... other methods
 

@@ -1,281 +1,288 @@
-<form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="container">
-  <div class="header">
-    <h2>Add Payment</h2>
-  </div>
-
-  <div class="form-group">
-    <label for="payee_first_name">First Name</label>
-    <input
-      id="payee_first_name"
-      formControlName="payee_first_name"
-      type="text"
-    />
-    <div
-      *ngIf="
-        paymentForm.get('payee_first_name')?.invalid &&
-        paymentForm.get('payee_first_name')?.touched
-      "
-      class="error-message"
-    >
-      First name is required.
+<div class="container">
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <div class="header">
+      <h2>Add Payment</h2>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="payee_last_name">Last Name</label>
-    <input id="payee_last_name" formControlName="payee_last_name" type="text" />
-    <div
-      *ngIf="
-        paymentForm.get('payee_last_name')?.invalid &&
-        paymentForm.get('payee_last_name')?.touched
-      "
-      class="error-message"
-    >
-      Last name is required.
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="payee_payment_status">Payment Status</label>
-    <select id="payee_payment_status" formControlName="payee_payment_status">
-      <option
-        *ngFor="let status of objectKeys(paymentStatusOptions)"
-        [value]="status"
+    <div class="form-group">
+      <label for="payee_first_name">First Name</label>
+      <input
+        id="payee_first_name"
+        formControlName="payee_first_name"
+        type="text"
+      />
+      <div
+        *ngIf="
+          paymentForm.get('payee_first_name')?.invalid &&
+          paymentForm.get('payee_first_name')?.touched
+        "
+        class="error-message"
       >
-        {{ paymentStatusOptions[status] }}
-      </option>
-    </select>
-    <div
-      *ngIf="
+        First name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="payee_last_name">Last Name</label>
+      <input
+        id="payee_last_name"
+        formControlName="payee_last_name"
+        type="text"
+      />
+      <div
+        *ngIf="
+          paymentForm.get('payee_last_name')?.invalid &&
+          paymentForm.get('payee_last_name')?.touched
+        "
+        class="error-message"
+      >
+        Last name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="payee_payment_status">Payment Status</label>
+      <select id="payee_payment_status" formControlName="payee_payment_status">
+        <option
+          *ngFor="let status of objectKeys(paymentStatusOptions)"
+          [value]="status"
+        >
+          {{ paymentStatusOptions[status] }}
+        </option>
+      </select>
+      <div
+        *ngIf="
         paymentForm.get('payee_payment_status')?.errors?.['required'] &&
         paymentForm.get('payee_payment_status')?.touched
       "
-      class="error-message"
-    >
-      Payee payment status is required.
+        class="error-message"
+      >
+        Payee payment status is required.
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="dueDate">Due Date</label>
-    <input
-      type="date"
-      id="dueDate"
-      formControlName="payee_due_date"
-      [min]="currentDate"
-      required
-    />
-    <div
-      *ngIf="paymentForm.get('payee_due_date')?.errors?.['required'] && 
+    <div class="form-group">
+      <label for="dueDate">Due Date</label>
+      <input
+        type="date"
+        id="dueDate"
+        formControlName="payee_due_date"
+        [min]="currentDate"
+        required
+      />
+      <div
+        *ngIf="paymentForm.get('payee_due_date')?.errors?.['required'] && 
                   paymentForm.get('payee_due_date')?.touched"
-      class="error-message"
-    >
-      Due Date is required.
+        class="error-message"
+      >
+        Due Date is required.
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="currency">Currency</label>
-    <datalist id="currenciesList" *ngIf="currencies && currencies.length > 0">
-      <option *ngFor="let currency of currencies" [value]="currency.code">
-        {{ currency.code }}
-      </option>
-    </datalist>
-    <input
-      type="text"
-      id="currency"
-      formControlName="currency"
-      list="currenciesList"
-      placeholder="Select or type a currency"
-      required
-    />
+    <div class="form-group">
+      <label for="currency">Currency</label>
+      <datalist id="currenciesList" *ngIf="currencies && currencies.length > 0">
+        <option *ngFor="let currency of currencies" [value]="currency.code">
+          {{ currency.code }}
+        </option>
+      </datalist>
+      <input
+        type="text"
+        id="currency"
+        formControlName="currency"
+        list="currenciesList"
+        placeholder="Select or type a currency"
+        required
+      />
 
-    <div
-      *ngIf="
+      <div
+        *ngIf="
         paymentForm.get('currency')?.errors?.['required'] &&
         paymentForm.get('currency')?.touched
       "
-      class="error-message"
-    >
-      Currency is required.
+        class="error-message"
+      >
+        Currency is required.
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="due_amount">Due Amount</label>
-    <input id="due_amount" formControlName="due_amount" type="text" />
-    <div
-      *ngIf="
-        paymentForm.get('due_amount')?.invalid &&
-        paymentForm.get('due_amount')?.touched
-      "
-      class="error-message"
-    >
-      Due Amount should be greater than or equal to 0.
+    <div class="form-group">
+      <label for="due_amount">Due Amount</label>
+      <input id="due_amount" formControlName="due_amount" type="text" />
+      <div
+        *ngIf="
+          paymentForm.get('due_amount')?.invalid &&
+          paymentForm.get('due_amount')?.touched
+        "
+        class="error-message"
+      >
+        Due Amount should be greater than or equal to 0.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="discount_percent">Discount Percent</label>
-    <input
-      id="discount_percent"
-      formControlName="discount_percent"
-      type="number"
-    />
-    <div
-      *ngIf="
-        paymentForm.get('discount_percent')?.invalid &&
-        paymentForm.get('discount_percent')?.touched
-      "
-      class="error-message"
-    >
-      Discount percent should be between 0 to 100.
+    <div class="form-group">
+      <label for="discount_percent">Discount Percent</label>
+      <input
+        id="discount_percent"
+        formControlName="discount_percent"
+        type="number"
+      />
+      <div
+        *ngIf="
+          paymentForm.get('discount_percent')?.invalid &&
+          paymentForm.get('discount_percent')?.touched
+        "
+        class="error-message"
+      >
+        Discount percent should be between 0 to 100.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="tax_percent">Tax Percent</label>
-    <input id="tax_percent" formControlName="tax_percent" type="number" />
-    <div
-      *ngIf="
-        paymentForm.get('tax_percent')?.invalid &&
-        paymentForm.get('tax_percent')?.touched
-      "
-      class="error-message"
-    >
-      Tax percent should be between 0 to 100.
+    <div class="form-group">
+      <label for="tax_percent">Tax Percent</label>
+      <input id="tax_percent" formControlName="tax_percent" type="number" />
+      <div
+        *ngIf="
+          paymentForm.get('tax_percent')?.invalid &&
+          paymentForm.get('tax_percent')?.touched
+        "
+        class="error-message"
+      >
+        Tax percent should be between 0 to 100.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="payee_address_line_1">Address Line 1</label>
-    <input
-      id="payee_address_line_1"
-      formControlName="payee_address_line_1"
-      type="text"
-    />
-    <div
-      *ngIf="
+    <div class="form-group">
+      <label for="payee_address_line_1">Address Line 1</label>
+      <input
+        id="payee_address_line_1"
+        formControlName="payee_address_line_1"
+        type="text"
+      />
+      <div
+        *ngIf="
         paymentForm.get('payee_address_line_1')?.errors?.['required'] &&
         paymentForm.get('payee_address_line_1')?.touched
       "
-      class="error-message"
-    >
-      Address Line 1 is required.
+        class="error-message"
+      >
+        Address Line 1 is required.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="payee_address_line_2">Address Line 2</label>
-    <input
-      id="payee_address_line_2"
-      formControlName="payee_address_line_2"
-      type="text"
-    />
-  </div>
-  <div class="form-group">
-    <label for="payee_country">Country</label>
-    <datalist id="countryList" *ngIf="countries && countries.length > 0">
-      <option *ngFor="let country of countries" [value]="country.country">
-        {{ country.country }}
-      </option>
-    </datalist>
-    <input
-      type="text"
-      id="countryInput"
-      list="countryList"
-      formControlName="payee_country"
-      required
-    />
-    <div
-      *ngIf="
+    <div class="form-group">
+      <label for="payee_address_line_2">Address Line 2</label>
+      <input
+        id="payee_address_line_2"
+        formControlName="payee_address_line_2"
+        type="text"
+      />
+    </div>
+    <div class="form-group">
+      <label for="payee_country">Country</label>
+      <datalist id="countryList" *ngIf="countries && countries.length > 0">
+        <option *ngFor="let country of countries" [value]="country.country">
+          {{ country.country }}
+        </option>
+      </datalist>
+      <input
+        type="text"
+        id="countryInput"
+        list="countryList"
+        formControlName="payee_country"
+        required
+      />
+      <div
+        *ngIf="
         paymentForm.get('payee_country')?.errors?.['required'] &&
         paymentForm.get('payee_country')?.touched
       "
-      class="error-message"
-    >
-      Country is required.
+        class="error-message"
+      >
+        Country is required.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="payee_province_or_state">State/Province</label>
-    <select id="state" formControlName="payee_province_or_state">
-      <option *ngFor="let state of states" [value]="state">
-        {{ state }}
-      </option>
-    </select>
-    <div
-      *ngIf="
+    <div class="form-group">
+      <label for="payee_province_or_state">State/Province</label>
+      <select id="state" formControlName="payee_province_or_state">
+        <option *ngFor="let state of states" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+      <div
+        *ngIf="
         paymentForm.get('payee_province_or_state')?.errors?.['required'] &&
         paymentForm.get('payee_province_or_state')?.touched
       "
-      class="error-message"
-    >
-      State/Province is required.
+        class="error-message"
+      >
+        State/Province is required.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="payee_city">City</label>
-    <select id="payee_city" formControlName="payee_city">
-      <option *ngFor="let city of cities" [value]="city">
-        {{ city }}
-      </option>
-    </select>
-    <div
-      *ngIf="
+    <div class="form-group">
+      <label for="payee_city">City</label>
+      <select id="payee_city" formControlName="payee_city">
+        <option *ngFor="let city of cities" [value]="city">
+          {{ city }}
+        </option>
+      </select>
+      <div
+        *ngIf="
         paymentForm.get('payee_city')?.errors?.['required'] &&
         paymentForm.get('payee_city')?.touched
       "
-      class="error-message"
-    >
-      City is required.
+        class="error-message"
+      >
+        City is required.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="payee_postal_code">Postal Code</label>
-    <input
-      id="payee_postal_code"
-      formControlName="payee_postal_code"
-      type="text"
-    />
-    <div
-      *ngIf="
-        paymentForm.get('payee_postal_code')?.invalid &&
-        paymentForm.get('payee_postal_code')?.touched
-      "
-      class="error-message"
-    >
-      Postal Code is required and it should be between 4 to 6 characters.
+    <div class="form-group">
+      <label for="payee_postal_code">Postal Code</label>
+      <input
+        id="payee_postal_code"
+        formControlName="payee_postal_code"
+        type="text"
+      />
+      <div
+        *ngIf="
+          paymentForm.get('payee_postal_code')?.invalid &&
+          paymentForm.get('payee_postal_code')?.touched
+        "
+        class="error-message"
+      >
+        Postal Code is required and it should be between 4 to 6 characters.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="payee_phone_number">Phone Number</label>
-    <input
-      id="payee_phone_number"
-      formControlName="payee_phone_number"
-      type="text"
-    />
-    <div
-      *ngIf="
-        paymentForm.get('payee_phone_number')?.invalid &&
-        paymentForm.get('payee_phone_number')?.touched
-      "
-      class="error-message"
-    >
-      Phone number is required and it should be between 8 to 11 digits.
+    <div class="form-group">
+      <label for="payee_phone_number">Phone Number</label>
+      <input
+        id="payee_phone_number"
+        formControlName="payee_phone_number"
+        type="text"
+      />
+      <div
+        *ngIf="
+          paymentForm.get('payee_phone_number')?.invalid &&
+          paymentForm.get('payee_phone_number')?.touched
+        "
+        class="error-message"
+      >
+        Phone number is required and it should be between 8 to 11 digits.
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="payee_email">Email</label>
-    <input id="payee_email" formControlName="payee_email" type="text" />
-    <div
-      *ngIf="
-        paymentForm.get('payee_email')?.invalid &&
-        paymentForm.get('payee_email')?.touched
-      "
-      class="error-message"
-    >
-      Email is required and it should be in valid format. e.g. abc&#64;test.com
+    <div class="form-group">
+      <label for="payee_email">Email</label>
+      <input id="payee_email" formControlName="payee_email" type="text" />
+      <div
+        *ngIf="
+          paymentForm.get('payee_email')?.invalid &&
+          paymentForm.get('payee_email')?.touched
+        "
+        class="error-message"
+      >
+        Email is required and it should be in valid format. e.g.
+        abc&#64;test.com
+      </div>
     </div>
-  </div>
 
-  <div class="form-group" style="text-align: center">
-    <button type="submit" [disabled]="paymentForm.invalid">Submit</button>
-  </div>
-</form>
+    <div class="form-group" style="text-align: center">
+      <button type="submit" [disabled]="paymentForm.invalid">Submit</button>
+    </div>
+  </form>
+</div>
