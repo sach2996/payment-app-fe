@@ -1,5 +1,6 @@
 .container {
     max-width: 800px;
+    min-height: 300px;
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -17,12 +18,12 @@
 
 .search-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
 .search-input {
-    width: 60%;
+    width: 72%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -217,3 +218,20 @@ span {
 .view-button:hover {
     background-color: #0062cc;
 }
+
+.loading-message {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    /* z-index: 9999; */
+    text-align: center;
+    /* Ensure it's on top of other elements */
+}
+
+.loading-message p {}

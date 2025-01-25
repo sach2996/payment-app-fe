@@ -8,61 +8,70 @@
       placeholder="Search by payee name"
       class="search-input"
     />
-    <button class="search-button" (click)="onSearch()">Search</button>
+    <div>
+      <button class="search-button" (click)="onSearch()">Search</button>
+      <button class="search-button" (click)="clearSearch()">Clear</button>
+    </div>
   </div>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Payee Name</th>
-        <th>Due Date</th>
-        <th>Amount</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let payment of filteredPayments">
-        <td>{{ payment.payee_first_name }} {{ payment.payee_last_name }}</td>
-        <td>{{ payment.payee_due_date }}</td>
-        <td>{{ payment.total_due | currency : "USD" }}</td>
-        <td>{{ payment.payee_payment_status | uppercase }}</td>
-        <td>
-          <button class="edit-button" (click)="viewPayment(payment._id)">
-            View
-          </button>
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Loading payments...</p>
+    <p>Server takes 30 seconds to initliaze</p>
+  </div>
+  <div *ngIf="!isLoading">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Payee Name</th>
+          <th>Due Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payment of filteredPayments">
+          <td>{{ payment.payee_first_name }} {{ payment.payee_last_name }}</td>
+          <td>{{ payment.payee_due_date }}</td>
+          <td>{{ payment.total_due | currency : "USD" }}</td>
+          <td>{{ payment.payee_payment_status | uppercase }}</td>
+          <td>
+            <button class="edit-button" (click)="viewPayment(payment._id)">
+              View
+            </button>
 
-          <button class="delete-button" (click)="deletePayment(payment._id)">
-            Delete
-          </button>
-          <!-- <button
+            <button class="delete-button" (click)="deletePayment(payment._id)">
+              Delete
+            </button>
+            <!-- <button
             class="download-button"
             *ngIf="payment.evidence_file_id"
             (click)="downloadEvidence(payment.evidence_file_id, payment._id)"
           >
             Evidence
           </button> -->
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="pagination">
-    <button
-      class="pagination-button"
-      (click)="onPageChange(currentPage - 1)"
-      [disabled]="currentPage === 1"
-    >
-      Previous
-    </button>
-    <span class="pagination-info"
-      >Page {{ currentPage }} of {{ totalPages }}</span
-    >
-    <button
-      class="pagination-button"
-      (click)="onPageChange(currentPage + 1)"
-      [disabled]="currentPage === totalPages"
-    >
-      Next
-    </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <button
+        class="pagination-button"
+        (click)="onPageChange(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span class="pagination-info"
+        >Page {{ currentPage }} of {{ totalPages }}</span
+      >
+      <button
+        class="pagination-button"
+        (click)="onPageChange(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
+    </div>
   </div>
 </div>
