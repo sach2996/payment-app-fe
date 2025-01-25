@@ -2,23 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from '../../core/services/payment.service';
 import { Payment } from '../../core/models/payment.model';
-import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { LocalTimePipe } from '../../core/pipes/localtime.pipe';
 
 @Component({
   selector: 'app-view-payment',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgIf,
-    LocalTimePipe,
-    DecimalPipe,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgIf],
   templateUrl: './view-payment.component.html',
   styleUrl: './view-payment.component.css',
 })

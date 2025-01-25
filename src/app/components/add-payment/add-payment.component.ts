@@ -20,11 +20,10 @@ interface Country {
 }
 
 @Component({
-  selector: 'app-add-payment',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './add-payment.component.html',
-  styleUrls: ['./add-payment.component.css'],
+    selector: 'app-add-payment',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    templateUrl: './add-payment.component.html',
+    styleUrls: ['./add-payment.component.css']
 })
 export class AddPaymentComponent implements OnInit {
   paymentForm!: FormGroup;

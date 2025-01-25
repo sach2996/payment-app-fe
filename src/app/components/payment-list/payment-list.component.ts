@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-list',
-  standalone: true,
   imports: [CommonModule, FormsModule, UpperCasePipe],
   templateUrl: './payment-list.component.html',
   styleUrls: ['./payment-list.component.css'],
