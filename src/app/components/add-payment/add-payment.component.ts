@@ -106,30 +106,26 @@ export class AddPaymentComponent implements OnInit {
   }
   fetchStates(countryCode: string) {
     if (countryCode) {
-      this.http
-        .get<any>(`https://countriesnow.space/api/v0.1/countries/states`, {
-          params: { country: countryCode },
-        })
-        .subscribe({
-          next: (response) => {
-            const countryData = response.data.filter((country: any) => {
-              if (country.name === countryCode) {
-                return country.states;
-              }
-            });
-            if (countryData) {
-              this.states = countryData[0].states.map(
-                (state: any) => state.name
-              );
-              this.updateCities(countryCode);
-            } else {
-              this.states = [];
+      this.coreService.getStates(countryCode).subscribe({
+        next: (response) => {
+          const countryData = response.data.filter((country: any) => {
+            if (country.name === countryCode) {
+              return country.states;
             }
-          },
-          error: (err) => {
-            console.error('Error fetching states:', err);
-          },
-        });
+          });
+          if (countryData) {
+            this.states = countryData[0]?.states.map(
+              (state: any) => state.name
+            );
+            this.updateCities(countryCode);
+          } else {
+            this.states = [];
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching states:', err);
+        },
+      });
     }
   }
   updateCities(countryName: String) {
@@ -141,19 +137,17 @@ export class AddPaymentComponent implements OnInit {
   }
 
   fetchCurrencies() {
-    this.http
-      .get<any>('https://openexchangerates.org/api/currencies.json')
-      .subscribe({
-        next: (data) => {
-          this.currencies = Object.entries(data).map(([code, name]) => ({
-            code,
-            name,
-          }));
-        },
-        error: (err) => {
-          console.error('Error fetching currencies:', err);
-        },
-      });
+    this.coreService.getCurrencies().subscribe({
+      next: (data) => {
+        this.currencies = Object.entries(data).map(([code, name]) => ({
+          code,
+          name,
+        }));
+      },
+      error: (err) => {
+        console.error('Error fetching currencies:', err);
+      },
+    });
   }
 
   onSubmit() {

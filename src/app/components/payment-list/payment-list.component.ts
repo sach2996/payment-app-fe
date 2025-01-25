@@ -59,40 +59,29 @@ export class PaymentListComponent {
   }
 
   deletePayment(id: string) {
-    this.isLoading = true; // Set isLoading to true to show loading indicator
+    this.isLoading = true;
 
-    // Call the deletePaymentById method of your paymentService
     this.paymentService.deletePaymentById(id).subscribe({
       next: (response) => {
-        // Filter out the deleted payment from payments and filteredPayments arrays
         this.payments = this.payments.filter((payment) => payment._id !== id);
         this.filteredPayments = this.filteredPayments.filter(
           (payment) => payment._id !== id
         );
 
-        // Optionally, you can recalculate the totalPages or other values
         this.totalPages = response.pagination.total_pages;
 
-        this.isLoading = false; // Set isLoading to false after successful API call
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error deleting payment:', error);
-        this.isLoading = false; // Set isLoading to false in case of error
+        this.isLoading = false;
       },
     });
   }
 
-  // calculateTotalDue(): void {
-  //   this.totalDue = this.payments.reduce(
-  //     (acc, payment) => acc + payment.due_amount,
-  //     0
-  //   );
-  // }
-
   viewPayment(id: any): void {
     this.router.navigate([`/payments/view/${id}`]);
   }
-  // ... other methods
 
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
@@ -109,17 +98,14 @@ export class PaymentListComponent {
 
     this.paymentService.downloadEvidence(id).subscribe({
       next: (blob) => {
-        // Create a download URL for the blob
         const url = window.URL.createObjectURL(blob);
 
-        // Create a temporary anchor element to trigger download
         const a = document.createElement('a');
         a.href = url;
         a.download = 'evidence_file'; // Use the filename or a default one
         document.body.appendChild(a);
         a.click();
 
-        // Clean up
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
 
