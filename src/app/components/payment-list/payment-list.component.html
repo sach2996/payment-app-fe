@@ -31,12 +31,16 @@
           <button class="edit-button" (click)="viewPayment(payment._id)">
             View
           </button>
+
+          <button class="delete-button" (click)="deletePayment(payment._id)">
+            Delete
+          </button>
           <button
             class="download-button"
             *ngIf="payment.evidence_file_id"
             (click)="downloadEvidence(payment.evidence_file_id, payment._id)"
           >
-            Download Evidence
+            Evidence
           </button>
         </td>
       </tr>
