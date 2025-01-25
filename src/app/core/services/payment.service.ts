@@ -12,7 +12,7 @@ type PaymentKeys =
   providedIn: 'root',
 })
 export class PaymentService {
-  private apiUrl = 'http://127.0.0.1:5000/payments';
+  private apiUrl = 'https://payment-project-e3bb.onrender.com/payments';
 
   constructor(private http: HttpClient) {}
 
