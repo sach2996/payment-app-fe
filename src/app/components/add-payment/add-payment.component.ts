@@ -62,6 +62,7 @@ export class AddPaymentComponent implements OnInit {
       payee_first_name: ['', Validators.required],
       payee_last_name: ['', Validators.required],
       payee_payment_status: ['', Validators.required],
+      payee_added_date_utc: new Date(),
       payee_due_date: ['', Validators.required],
       currency: ['', [Validators.required]],
       due_amount: [0, [Validators.required, Validators.min(0)]],
