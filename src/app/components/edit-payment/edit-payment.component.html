@@ -1,0 +1,226 @@
+<div class="container">
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Loading...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>Error loading payment: {{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="payment" class="payment-details">
+    <h2 style="text-align: center">Payment Details</h2>
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="firstName">Payee First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          formControlName="payee_first_name"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="lastName">Payee Last Name:</label>
+        <input
+          type="text"
+          id="lastName"
+          formControlName="payee_last_name"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="payeeAddedDateUtc">Payee Added Date:</label>
+        <input
+          type="text"
+          id="payeeAddedDateUtc"
+          formControlName="payee_added_date_utc"
+          [disabled]="true"
+        />
+      </div>
+
+      <div>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" formControlName="payee_due_date" />
+      </div>
+      <div>
+        <label for="status">Payment Status:</label>
+        <select id="status" formControlName="payee_payment_status">
+          <option value="" disabled>Select payment status</option>
+          <option *ngFor="let status of paymentStatuses" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <label for="totalDue">Total Due:</label>
+        <input
+          type="text"
+          id="totalDue"
+          formControlName="total_due"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="dueAmount">Due Amount:</label>
+        <input
+          type="text"
+          id="dueAmount"
+          formControlName="due_amount"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="currency">Currency:</label>
+        <input
+          type="text"
+          id="currency"
+          formControlName="currency"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="discount">Discount Percent:</label>
+        <input
+          type="text"
+          id="discount"
+          formControlName="discount_percent"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="tax">Tax Percent:</label>
+        <input
+          type="text"
+          id="tax"
+          formControlName="tax_percent"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="address1">Address Line 1:</label>
+        <input
+          type="text"
+          id="address1"
+          formControlName="payee_address_line_1"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="address2">Address Line 2:</label>
+        <input
+          type="text"
+          id="address2"
+          formControlName="payee_address_line_2"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="city">City:</label>
+        <input
+          type="text"
+          id="city"
+          formControlName="payee_city"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="country">Country:</label>
+        <input
+          type="text"
+          id="country"
+          formControlName="payee_country"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="state">Province/State:</label>
+        <input
+          type="text"
+          id="state"
+          formControlName="payee_province_or_state"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="postalCode">Postal Code:</label>
+        <input
+          type="text"
+          id="postalCode"
+          formControlName="payee_postal_code"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="phone">Phone Number:</label>
+        <input
+          type="text"
+          id="phone"
+          formControlName="payee_phone_number"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input
+          type="text"
+          id="email"
+          formControlName="payee_email"
+          [disabled]="true"
+        />
+      </div>
+      <div *ngIf="payment.payee_payment_status != 'completed'">
+        <label for="evidenceFile">Evidence File:</label>
+        <input
+          type="file"
+          id="evidenceFile"
+          formControlName="evidence_file"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+      <div *ngIf="payment.payee_payment_status === 'completed'">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+          "
+        >
+          <!-- Left-aligned label -->
+          <label for="evidenceFile">Evidence File:</label>
+
+          <!-- Right-aligned button -->
+          <button
+            class="download-button"
+            *ngIf="payment.evidence_file_id"
+            (click)="downloadEvidence(payment.evidence_file_id, payment._id)"
+          >
+            Download Evidence
+          </button>
+        </div>
+      </div>
+
+      <!-- Add other non-editable fields similarly -->
+      <div
+        style="
+          margin-top: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <button type="submit" [disabled]="paymentForm.invalid">
+          Update Payment
+        </button>
+      </div>
+
+      <!-- Display error message if there's an error -->
+      <div
+        *ngIf="errorMessage"
+        style="color: red; text-align: center; margin-top: 10px"
+      >
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div>

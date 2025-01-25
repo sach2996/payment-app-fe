@@ -1,0 +1,33 @@
+.navbar {
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    /* Light gray background */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    z-index: 999;
+    /* Ensure navbar is on top */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.navbar-link {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #333;
+    /* Dark gray text color */
+}
+
+.navbar-link.active {
+    font-weight: bold;
+    /* Make active links bold */
+}

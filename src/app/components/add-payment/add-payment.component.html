@@ -1,0 +1,258 @@
+<div class="container">
+  <h2 class="header">Add Payment</h2>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="firstName">Payee First Name:</label>
+      <input
+        type="text"
+        id="firstName"
+        formControlName="payee_first_name"
+        required
+      />
+      <div
+        *ngIf="
+          paymentForm.get('payee_first_name')?.invalid &&
+          paymentForm.get('payee_first_name')?.touched
+        "
+        class="error-message"
+      >
+        Payee First Name is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Payee Last Name:</label>
+      <input
+        type="text"
+        id="lastName"
+        formControlName="payee_last_name"
+        required
+      />
+      <div
+        *ngIf="
+          paymentForm.get('payee_last_name')?.invalid &&
+          paymentForm.get('payee_last_name')?.touched
+        "
+        class="error-message"
+      >
+        Payee Last Name is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="dueDate">Due Date:</label>
+      <input
+        type="date"
+        id="dueDate"
+        formControlName="payee_due_date"
+        required
+      />
+      <div
+        *ngIf="
+          paymentForm.get('payee_due_date')?.invalid &&
+          paymentForm.get('payee_due_date')?.touched
+        "
+        class="error-message"
+      >
+        Due Date is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="status">Payment Status:</label>
+      <select id="status" formControlName="payee_payment_status">
+        <option *ngFor="let status of paymentStatuses" [value]="status">
+          {{ status }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          paymentForm.get('payee_payment_status')?.invalid &&
+          paymentForm.get('payee_payment_status')?.touched
+        "
+        class="error-message"
+      >
+        Payment Status can be pending only.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="dueAmount">Due Amount:</label>
+      <input
+        type="number"
+        id="dueAmount"
+        formControlName="due_amount"
+        required
+      />
+      <div
+        *ngIf="
+          paymentForm.get('due_amount')?.hasError('pattern') &&
+          paymentForm.get('due_amount')?.touched
+        "
+        class="error-message"
+      >
+        Enter a valid amount (e.g., 100 or 100.00).
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="currency">Currency:</label>
+      <input type="text" id="currency" formControlName="currency" />
+      <div
+        *ngIf="
+          paymentForm.get('currency')?.hasError('pattern') &&
+          paymentForm.get('currency')?.touched
+        "
+        class="error-message"
+      >
+        Enter a valid currency.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="discount">Discount Percent:</label>
+      <input type="number" id="discount" formControlName="discount_percent" />
+      <div
+        *ngIf="
+          paymentForm.get('discount_percent')?.hasError('pattern') &&
+          paymentForm.get('discount_percent')?.touched
+        "
+        class="error-message"
+      >
+        Enter a valid discount percent.It can be between 0-100.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="tax">Tax Percent:</label>
+      <input type="number" id="tax" formControlName="tax_percent" />
+      <div
+        *ngIf="
+          paymentForm.get('tax_percent')?.hasError('pattern') &&
+          paymentForm.get('tax_percent')?.touched
+        "
+        class="error-message"
+      >
+        Enter a valid tax percent.It can be between 0-100.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="address1">Address Line 1:</label>
+      <input type="text" id="address1" formControlName="payee_address_line_1" />
+      <div
+        *ngIf="
+          paymentForm.get('payee_address_line_1')?.hasError('pattern') &&
+          paymentForm.get('payee_address_line_1')?.touched
+        "
+        class="error-message"
+      >
+        Address Line 1 is mandetory field.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="address2">Address Line 2:</label>
+      <input type="text" id="address2" formControlName="payee_address_line_2" />
+    </div>
+    <div class="form-group">
+      <label for="city">City:</label>
+      <input
+        type="text"
+        id="city"
+        formControlName="payee_city"
+        (input)="onCityInput($event)"
+        list="cityList"
+      />
+      <datalist id="cityList">
+        <option *ngFor="let city of cities" [value]="city">
+          {{ city }}
+        </option>
+      </datalist>
+      <div
+        *ngIf="
+          paymentForm.get('payee_city')?.hasError('pattern') &&
+          paymentForm.get('payee_city')?.touched
+        "
+        class="error-message"
+      >
+        City is mandetory field.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="country">Country:</label>
+      <datalist id="countryList" *ngIf="countries && countries.length > 0">
+        <option *ngFor="let country of countries" [value]="country.country">
+          {{ country.country }}
+        </option>
+      </datalist>
+      <input
+        type="text"
+        id="countryInput"
+        list="countryList"
+        formControlName="payee_country"
+        required
+      />
+      <div
+        *ngIf="
+          paymentForm.get('payee_country')?.hasError('pattern') &&
+          paymentForm.get('payee_country')?.touched
+        "
+        class="error-message"
+      >
+        Country is mandetory field.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="state">Province/State:</label>
+      <select id="state" formControlName="payee_province_or_state">
+        <option *ngFor="let state of states" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          paymentForm.get('payee_province_or_state')?.hasError('pattern') &&
+          paymentForm.get('payee_province_or_state')?.touched
+        "
+        class="error-message"
+      >
+        State/Province is mandetory field.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="postalCode">Postal Code:</label>
+      <input type="text" id="postalCode" formControlName="payee_postal_code" />
+      <div
+        *ngIf="
+          paymentForm.get('payee_postal_code')?.hasError('pattern') &&
+          paymentForm.get('payee_postal_code')?.touched
+        "
+        class="error-message"
+      >
+        Postal Code is mandetory field.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="payee_email" />
+      <div
+        *ngIf="
+          paymentForm.get('payee_email')?.invalid &&
+          paymentForm.get('payee_email')?.touched
+        "
+        class="error-message"
+      >
+        Enter a valid email address.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" formControlName="payee_phone_number" />
+      <div
+        *ngIf="
+          paymentForm.get('payee_phone_number')?.hasError('pattern') &&
+          paymentForm.get('payee_phone_number')?.touched
+        "
+        class="error-message"
+      >
+        Enter a valid phone number.
+      </div>
+    </div>
+    <button type="submit" class="form-group" [disabled]="paymentForm.invalid">
+      Add Payment
+    </button>
+  </form>
+</div>

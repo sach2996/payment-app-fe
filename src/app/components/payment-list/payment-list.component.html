@@ -1,0 +1,60 @@
+<div class="container">
+  <h2 class="center">Payment List</h2>
+
+  <div class="search-container center">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search by payee name"
+      class="search-input"
+    />
+    <button class="search-button" (click)="onSearch()">Search</button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Payee Name</th>
+        <th>Due Date</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of filteredPayments">
+        <td>{{ payment.payee_first_name }} {{ payment.payee_last_name }}</td>
+        <td>{{ payment.payee_due_date }}</td>
+        <td>{{ payment.total_due | currency : "USD" }}</td>
+        <td>{{ payment.payee_payment_status | uppercase }}</td>
+        <td>
+          <button class="edit-button" (click)="viewPayment(payment._id)">
+            View
+          </button>
+          <button
+            class="download-button"
+            *ngIf="payment.evidence_file_id"
+            (click)="downloadEvidence(payment.evidence_file_id, payment._id)"
+          >
+            Download Evidence
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-container">
+    <button
+      (click)="onPageChange(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button
+      (click)="onPageChange(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      Next
+    </button>
+  </div>
+</div>
