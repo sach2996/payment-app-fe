@@ -27,6 +27,7 @@
           <th>Amount</th>
           <th>Status</th>
           <th>Actions</th>
+          <th>Evidence</th>
         </tr>
       </thead>
       <tbody>
@@ -43,13 +44,17 @@
             <button class="delete-button" (click)="deletePayment(payment._id)">
               Delete
             </button>
-            <!-- <button
-            class="download-button"
-            *ngIf="payment.evidence_file_id"
-            (click)="downloadEvidence(payment.evidence_file_id, payment._id)"
-          >
-            Evidence
-          </button> -->
+          </td>
+
+          <td>
+            <button
+              class="download-button"
+              *ngIf="payment.evidence_file_id"
+              (click)="downloadEvidence(payment.evidence_file_id, payment._id)"
+            >
+              Download
+            </button>
+            <span *ngIf="!payment.evidence_file_id">NA</span>
           </td>
         </tr>
       </tbody>

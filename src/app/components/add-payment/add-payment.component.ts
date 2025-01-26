@@ -20,10 +20,10 @@ interface Country {
 }
 
 @Component({
-    selector: 'app-add-payment',
-    imports: [CommonModule, ReactiveFormsModule, FormsModule],
-    templateUrl: './add-payment.component.html',
-    styleUrls: ['./add-payment.component.css']
+  selector: 'app-add-payment',
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  templateUrl: './add-payment.component.html',
+  styleUrls: ['./add-payment.component.css'],
 })
 export class AddPaymentComponent implements OnInit {
   paymentForm!: FormGroup;
@@ -159,7 +159,7 @@ export class AddPaymentComponent implements OnInit {
       const newPayment = this.paymentForm.value;
       this.paymentService.createPayment(newPayment).subscribe(
         (response) => {
-          this.router.navigate([`/payments/edit/${response?.id}`]);
+          this.router.navigate([`/payments/view/${response?.id}`]);
         },
         (error) => {
           console.error('Error creating payment:', error);
