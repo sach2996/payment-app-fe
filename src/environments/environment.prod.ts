@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://payment-project-e3bb.onrender.com/payments',
+  apiUrl: 'https://payment-projectpyth.onrender.com/payments',
 };
